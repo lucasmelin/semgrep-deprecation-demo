@@ -1,0 +1,56 @@
+rules:
+  - id: bash-deprecated-please-flag
+    languages:
+      - bash
+    message: >
+      code-buddy[🤖]: The --please flag is deprecated.
+    pattern: code-buddy run $X --please
+    fix: code-buddy run $X
+    severity: WARNING
+
+  - id: extract-markdown-code-block
+    mode: extract
+    languages:
+      - generic
+    pattern-either:
+      - pattern: |
+          ```sh$...CMD```
+      - pattern: |
+          ```bash$...CMD```
+    extract: $...CMD
+    dest-language: bash
+
+  - id: go-deprecated-please-flag
+    languages:
+      - golang
+    message: >
+      code-buddy[🤖]: The --please flag is deprecated.
+    pattern-either:
+      - pattern: |
+          exec.Command("code-buddy", "run", $X, "--please")
+    fix-regex:
+      regex: 'Command\("code-buddy", "run", (.*), "--please"\)'
+      replacement: 'Command("code-buddy", "run", \1)'
+    severity: WARNING
+
+  - id: github-actions-deprecated-please-flag
+    languages:
+      - yaml
+    message: >
+      code-buddy[🤖]: The --please flag is deprecated.
+    patterns:
+      - pattern-inside: "steps: [...]"
+      - pattern-inside: |
+          - name: ...
+            ...
+            run: ...
+      - pattern-inside: "run: $SHELL"
+      - metavariable-pattern:
+          language: bash
+          metavariable: $SHELL
+          pattern: code-buddy run $X --please
+      - focus-metavariable: $SHELL
+    fix-regex:
+      regex: 'code-buddy run (.*) --please'
+      replacement: 'code-buddy run \1'
+    severity: WARNING

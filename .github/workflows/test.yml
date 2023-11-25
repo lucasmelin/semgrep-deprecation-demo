@@ -1,0 +1,16 @@
+---
+name: Test application output
+
+on: [push]
+jobs:
+  test-output:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Print the code-buddy output
+        run: code-buddy run someapp --please
+
+      - name: Print the application output
+        run: go run main.go someapp

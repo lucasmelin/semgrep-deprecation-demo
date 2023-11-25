@@ -1,0 +1,13 @@
+                  
+                  
+┌────────────────┐
+│ 1 Code Finding │
+└────────────────┘
+                              
+  [36m[22m[24m  run-app.sh [0m
+       [1m[24mbash-deprecated-please-flag[0m              
+          code-buddy[🤖]: The --please flag is deprecated.
+                                                          
+  [32m[22m[24m         ▶▶┆ Autofix ▶[0m code-buddy run mycoolapp
+            3┆ [1m[24mcode-buddy run mycoolapp[0m
+
